@@ -1,6 +1,9 @@
-# iiosMap (portable zip)
+# iiosMap (packaging scripts)
 
-This folder is produced by `scripts/build-portable.ps1` in the source repository.
+These scripts support **two** layouts:
+
+1. **Portable ZIP** — produced by `scripts/build-portable.ps1` at `dist/iiosMap-portable/`. Contains `wheels/`, `app/frontend/dist/`, and these `.ps1` files.
+2. **Git clone** — run `setup-venv.ps1` from `packaging/` inside the repo; it installs the backend from `../backend` in editable mode (no `wheels/` folder needed). Build the frontend once: `cd ../frontend && npm install && npm run build`.
 
 ## First-time setup (Windows)
 
@@ -13,7 +16,7 @@ This folder is produced by `scripts/build-portable.ps1` in the source repository
    .\setup-venv.ps1
    ```
 
-   This creates `.venv\` and installs the `iiosmap` wheel from `wheels\`.
+   This creates `.venv\` and installs **iiosmap** (from `wheels\` in the portable bundle, or `pip install -e ..\backend` when run from a full clone).
 
 ## Run
 
@@ -34,4 +37,5 @@ With the game running, press **Ctrl+Alt+S** (default) to capture the `La.MuLANA`
 ## Troubleshooting
 
 - **Port in use**: set `$env:IIOSMAP_PORT = "8766"` then run `Start-iiosMap.ps1` again.
-- **Frontend missing**: ensure `app\frontend\dist\` exists inside this folder (rebuild the portable zip from source if needed).
+- **Frontend missing (git clone)**: run `npm install` and `npm run build` in `..\frontend` so `..\frontend\dist` exists.
+- **Frontend missing (portable zip)**: ensure `app\frontend\dist\` exists (rebuild the portable zip from source if needed).
