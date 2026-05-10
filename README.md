@@ -2,16 +2,14 @@
 
 Local map - hotkey capture, a grid map, and annotations. Data stays on your PC (SQLite + images). Currently **Windows only**.
 
+## Requirements
+- **Python 3.11+** https://www.python.org/downloads/
+- **Node.js 18+** https://nodejs.org/en/download
+
 ## Run the project
 
-You need **Python 3.11+** and **Node.js 18+**.
+- From the **repository root** double-click **`Run-iiosMap.bat`** or run `.\Run-iiosMap.ps1` in powershell
 
-**One command (recommended):** from the **repository root** in PowerShell, run:
+That creates/updates `.venv`, installs the backend, runs `npm install` + `npm run build` in `frontend`, then starts the server. Open **http://127.0.0.1:8765/** when it is ready (your browser may open automatically after a moment). With your targeted app running, press **Ctrl+Alt+S** to capture.
 
-```powershell
-.\Run-iiosMap.ps1
-```
 
-Or double-click **`Run-iiosMap.bat`** (uses the same script; no need to change execution policy).
-
-That creates/updates `.venv`, installs the backend, runs `npm install` + `npm run build` in `frontend`, then starts the server. Open **http://127.0.0.1:8765/** when it is ready (your browser may open automatically after a moment). With La-Mulana running, press **Ctrl+Alt+S** to capture.
