@@ -105,7 +105,14 @@ def create_app() -> FastAPI:
             index = config.FRONTEND_DIST / "index.html"
             if not index.exists():
                 return JSONResponse(
-                    {"detail": "frontend not built. run `npm run build` in /frontend."},
+                    {
+                        "detail": (
+                            "frontend not built. From the repo root: "
+                            "`cd frontend && npm install && npm run build` "
+                            "(creates frontend/dist). Or run `npm run dev` in frontend "
+                            "and use the Vite URL for development."
+                        ),
+                    },
                     status_code=503,
                 )
             return FileResponse(index)
@@ -115,9 +122,12 @@ def create_app() -> FastAPI:
             return {
                 "ok": True,
                 "message": (
-                    "iiosMap backend is running. Frontend bundle not found at "
-                    f"{config.FRONTEND_DIST}. During development run the Vite dev "
-                    "server (`npm run dev` in /frontend)."
+                    "iiosMap backend is running, but there is no built UI yet. "
+                    f"Expected bundle at {config.FRONTEND_DIST}. "
+                    "From the repository root run: "
+                    "`cd frontend` then `npm install` then `npm run build`. "
+                    "Alternatively, for hot reload, use two terminals: "
+                    "`python -m iiosmap` and `npm run dev` in frontend (see README)."
                 ),
             }
 

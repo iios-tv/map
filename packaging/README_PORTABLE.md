@@ -8,8 +8,16 @@ These scripts support **two** layouts:
 ## First-time setup (Windows)
 
 1. Install [Python 3.11+](https://www.python.org/downloads/) and ensure **Add python.exe to PATH** is enabled (or use the `py` launcher).
-2. Open PowerShell **in this folder** (Shift+Right-click → Open in Terminal).
-3. Run:
+2. Install [Node.js 18+](https://nodejs.org/) (needed once to build the web UI).
+3. From the **repository root** (the folder that contains `frontend` and `packaging`), build the web UI once:
+   ```powershell
+   cd frontend
+   npm install
+   npm run build
+   cd ..
+   ```
+4. Open PowerShell **in the `packaging` folder** (Shift+Right-click - Open in Terminal).
+5. Run:
 
    ```powershell
    Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
