@@ -4,7 +4,19 @@ Local map tracker for [La-Mulana](https://en.wikipedia.org/wiki/La-Mulana) on **
 
 ## Run the project
 
-You need **Python 3.11+** and **Node.js 18+**. In PowerShell, `cd` to the **repository root** (the folder that contains `backend` and `frontend`).
+You need **Python 3.11+** and **Node.js 18+**.
+
+**One command (recommended):** from the **repository root** in PowerShell, run:
+
+```powershell
+.\Run-iiosMap.ps1
+```
+
+Or double-click **`Run-iiosMap.bat`** (uses the same script; no need to change execution policy).
+
+That creates/updates `.venv`, installs the backend, runs `npm install` + `npm run build` in `frontend`, then starts the server. Open **http://127.0.0.1:8765/** when it is ready (your browser may open automatically after a moment). With La-Mulana running, press **Ctrl+Alt+S** to capture.
+
+**Or step by step** (same end result):
 
 ```powershell
 python -m venv .venv
@@ -18,10 +30,6 @@ python -m iiosmap
 ```
 
 If you change Python dependencies later, run `pip install -e .\backend` again ([`backend/pyproject.toml`](backend/pyproject.toml)).
-
-The steps above include **`npm run build`** because the repo does not ship `frontend/dist` (gitignored); without it, the server starts but there is no UI.
-
-Open **http://127.0.0.1:8765/** in your browser. With La-Mulana running, press **Ctrl+Alt+S** to capture.
 
 ### Demo
 

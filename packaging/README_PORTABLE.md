@@ -2,8 +2,8 @@
 
 These scripts support **two** layouts:
 
-1. **Portable ZIP** — produced by `scripts/build-portable.ps1` at `dist/iiosMap-portable/`. Contains `wheels/`, `app/frontend/dist/`, and these `.ps1` files.
-2. **Git clone** — run `setup-venv.ps1` from `packaging/` inside the repo; it installs the backend from `../backend` in editable mode (no `wheels/` folder needed). Build the frontend once: `cd ../frontend && npm install && npm run build`.
+1. **Git clone** — from the repo root, **`Run-iiosMap.ps1`** or **`Run-iiosMap.bat`** does venv + `pip install -e backend` + `npm install` / `npm run build` + starts the server (see main [README](../README.md)). Or use `packaging/` scripts alone after you have built `frontend/dist`.
+2. **Portable ZIP** — produced by `scripts/build-portable.ps1` at `dist/iiosMap-portable/`. Contains `wheels/`, `app/frontend/dist/`, and launcher scripts (no Node required for end users who use the prebuilt UI).
 
 ## First-time setup (Windows)
 
