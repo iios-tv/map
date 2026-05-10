@@ -1,5 +1,13 @@
 # iiosMap
 
+**Getting started:** [portable install and packaging scripts](packaging/README_PORTABLE.md)
+
+**Demo:**
+
+<video src="docs/demo.mp4" controls playsinline width="100%"></video>
+
+If this preview does not play in your viewer, open [`docs/demo.mp4`](docs/demo.mp4) in the repository files.
+
 A local-only web app for building your own interactive map of
 [La-Mulana](https://en.wikipedia.org/wiki/La-Mulana) (the 2005/2006 freeware
 PC original) from your own gameplay screenshots. A global Windows hotkey grabs
