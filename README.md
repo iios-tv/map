@@ -1,27 +1,62 @@
 # iiosMap
 
-**Getting started:** [portable install and packaging scripts](packaging/README_PORTABLE.md)
+Local map tracker for [La-Mulana](https://en.wikipedia.org/wiki/La-Mulana) on **Windows**: hotkey capture, a grid map, and annotations. Data stays on your PC (SQLite + images). Source: [github.com/iios-tv/map](https://github.com/iios-tv/map).
 
-**Demo:**
+## Run the project
+
+You need **Python 3.11+** and **Node.js 18+**. In PowerShell, `cd` to the **repository root** (the folder that contains `backend` and `frontend`).
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -e .\backend
+cd frontend
+npm install
+npm run build
+cd ..
+python -m iiosmap
+```
+
+If you change Python dependencies later, run `pip install -e .\backend` again ([`backend/pyproject.toml`](backend/pyproject.toml)).
+
+The steps above include **`npm run build`** because the repo does not ship `frontend/dist` (gitignored); without it, the server starts but there is no UI.
+
+Open **http://127.0.0.1:8765/** in your browser. With La-Mulana running, press **Ctrl+Alt+S** to capture.
+
+### Demo
 
 <video src="docs/demo.mp4" controls playsinline width="100%"></video>
 
 If this preview does not play in your viewer, open [`docs/demo.mp4`](docs/demo.mp4) in the repository files.
 
-A local-only web app for building your own interactive map of
-[La-Mulana](https://en.wikipedia.org/wiki/La-Mulana) (the 2005/2006 freeware
-PC original) from your own gameplay screenshots. A global Windows hotkey grabs
-the `La.MuLANA` window, auto-crops the VIT/EXP HUD, and drops the screenshot
-into a "pending" tray; you then arrange the screens on a pan/zoom grid map,
-annotate them (gravestones, skeletons, visual hints, quest gates, notes), and
-optionally combine multiple captures of an over-tall room into one big tile.
+### Next runs
 
-Everything is stored locally (SQLite + PNGs). Nothing leaves your machine.
-During development from a git checkout, data defaults to `./data/`. When the
-app is installed from a wheel without a dev tree, data defaults to
-`%LOCALAPPDATA%\iiosMap\` on Windows unless you set `IIOSMAP_DATA_DIR`.
+```powershell
+.\.venv\Scripts\Activate.ps1
+python -m iiosmap
+```
 
-Upstream repository: [github.com/iios-tv/map](https://github.com/iios-tv/map).
+Optional: `IIOSMAP_DATA_DIR`, `IIOSMAP_APP_ROOT`, `IIOSMAP_HOST`, `IIOSMAP_PORT` (legacy `LAMULANA_*` still works for data dir / host / port).
+
+### Portable zip (launcher scripts)
+
+[packaging/README_PORTABLE.md](packaging/README_PORTABLE.md)
+
+### Development mode (frontend hot reload)
+
+Use two terminals so the UI comes from Vite (no `npm run build` needed for this workflow):
+
+```powershell
+# terminal 1
+.\.venv\Scripts\Activate.ps1
+python -m iiosmap
+
+# terminal 2
+cd frontend
+npm run dev
+```
+
+Open **http://localhost:5173/** . Vite proxies `/api`, `/images`, `/composites`, and `/ws` to the backend. Set `IIOSMAP_BACKEND` (or `LAMULANA_BACKEND`) if the API is not on the default URL.
 
 ## Features
 
@@ -42,63 +77,6 @@ Upstream repository: [github.com/iios-tv/map](https://github.com/iios-tv/map).
 - Composite editor — overlay 2+ captures with an opacity slider and per-image
   drag/arrow-key alignment, saved as a single multi-cell tile.
 - Live updates over WebSocket without clobbering in-progress edits.
-
-## Requirements
-
-- Windows (the capture path uses Win32 `PrintWindow`).
-- Python 3.11+
-- Node.js 18+ (for building the frontend from source)
-
-## One-time setup
-
-From the repo root, in PowerShell:
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -e .\backend
-
-cd frontend
-npm install
-npm run build
-cd ..
-```
-
-This installs the **`iiosmap`** package in editable mode and pulls every dependency
-listed in [`backend/pyproject.toml`](backend/pyproject.toml). Re-run `pip install -e`
-after `pyproject.toml` changes.
-
-## Running
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-python -m iiosmap
-```
-
-Then open <http://127.0.0.1:8765/> in any browser. With La-Mulana running,
-press `Ctrl+Alt+S` to capture; new screens appear in the bottom tray.
-
-Environment variables (optional): `IIOSMAP_DATA_DIR`, `IIOSMAP_APP_ROOT` (bundle
-root containing `frontend/dist`), `IIOSMAP_HOST`, `IIOSMAP_PORT`. Legacy
-`LAMULANA_*` names still work for data dir, host, and port.
-
-### Development mode (frontend hot reload)
-
-```powershell
-# terminal 1
-.\.venv\Scripts\Activate.ps1
-python -m iiosmap
-
-# terminal 2
-cd frontend
-npm run dev
-```
-
-Then visit <http://localhost:5173/>. The Vite dev server proxies `/api`,
-`/images`, `/composites`, and `/ws` to the backend on `127.0.0.1:8765`.
-
-For Vite, set `IIOSMAP_BACKEND` (or legacy `LAMULANA_BACKEND`) if the API is not
-on the default URL.
 
 ## Portable distribution zip
 
