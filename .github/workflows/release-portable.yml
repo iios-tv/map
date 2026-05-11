@@ -1,0 +1,57 @@
+# Build the Windows portable bundle (prebuilt SPA + wheel + launcher scripts)
+# and attach it to the GitHub Release for the pushed tag (e.g. v0.1.0).
+#
+# Create a release: git tag v0.1.0 && git push origin v0.1.0
+# Or create a release from the GitHub UI that points at that tag; this workflow
+# runs on tag push and uploads iiosMap-portable-<tag>.zip to the matching release.
+
+name: Release portable zip
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  portable:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install and build frontend
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Assemble portable folder
+        shell: pwsh
+        run: ./scripts/build-portable.ps1
+
+      - name: Zip bundle
+        id: pack
+        shell: pwsh
+        run: |
+          $zip = "iiosMap-portable-${{ github.ref_name }}.zip"
+          Compress-Archive -Path "dist\iiosMap-portable" -DestinationPath $zip -Force
+          Add-Content -Path $env:GITHUB_OUTPUT -Value "zip=$zip"
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.pack.outputs.zip }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
