@@ -5,10 +5,13 @@ __pycache__/
 .pytest_cache/
 
 node_modules/
-frontend/dist/
 dist/
 .build/
 backend/build/
+
+# frontend/dist is committed so end users can run without Node/npm.
+# It is rebuilt automatically by .github/workflows/build-frontend.yml.
+!frontend/dist/
 
 *.tsbuildinfo
 

@@ -107,10 +107,10 @@ def create_app() -> FastAPI:
                 return JSONResponse(
                     {
                         "detail": (
-                            "frontend not built. From the repo root: "
-                            "`cd frontend && npm install && npm run build` "
-                            "(creates frontend/dist). Or run `npm run dev` in frontend "
-                            "and use the Vite URL for development."
+                            "frontend not built. Pull the latest from main (CI commits "
+                            "a prebuilt frontend/dist), or, if you have Node.js installed, "
+                            "rebuild from the repo root: "
+                            "`cd frontend && npm install && npm run build`."
                         ),
                     },
                     status_code=503,
@@ -124,9 +124,10 @@ def create_app() -> FastAPI:
                 "message": (
                     "iiosMap backend is running, but there is no built UI yet. "
                     f"Expected bundle at {config.FRONTEND_DIST}. "
-                    "From the repository root run: "
-                    "`cd frontend` then `npm install` then `npm run build`. "
-                    "Alternatively, for hot reload, use two terminals: "
+                    "Pull the latest from main (CI commits a prebuilt frontend/dist), "
+                    "or, if you have Node.js installed, rebuild from the repo root: "
+                    "`cd frontend && npm install && npm run build`. "
+                    "For hot reload, use two terminals: "
                     "`python -m iiosmap` and `npm run dev` in frontend (see README)."
                 ),
             }

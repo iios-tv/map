@@ -4,13 +4,13 @@ Local map - hotkey capture, a grid map, and annotations. Data stays on your PC (
 
 ## Requirements
 - **Python 3.11+** — always ([download](https://www.python.org/downloads/))
-- **Node.js 18+** — only if you [build from source](#build-from-source-clone) or use `Run-iiosMap.ps1` / a git clone ([download](https://nodejs.org/en/download)). Not needed for [Release](#download-no-nodejs-required) zips.
+- **Node.js** — optional. The prebuilt web UI in `frontend/dist/` is committed and refreshed by CI, so neither the [Release](#download-no-nodejs-required) zip nor a fresh clone needs Node to run. Install Node.js 18+ ([download](https://nodejs.org/en/download)) only if you want to rebuild the frontend yourself.
 
 ## Run the project
 
 - From the **repository root** double-click **`Run-iiosMap.bat`** or run `.\Run-iiosMap.ps1` in powershell
 
-That creates/updates `.venv`, installs the backend, runs `npm install` + `npm run build` in `frontend`, then starts the server. Open **http://127.0.0.1:8765/** when it is ready (your browser may open automatically after a moment). With your targeted app running, press **Ctrl+Alt+S** to capture.
+That creates/updates `.venv`, installs the backend, and starts the server. If Node.js / npm is installed it will also refresh the frontend bundle; otherwise it uses the committed `frontend/dist/`. Open **http://127.0.0.1:8765/** when it is ready (your browser may open automatically after a moment). With your targeted app running, press **Ctrl+Alt+S** to capture.
 
 ![screenshot2](screenshot2.png?raw=true)
 
@@ -25,4 +25,4 @@ Maintainers: push a version tag (e.g. `git tag v0.1.0 && git push origin v0.1.0`
 
 ## Build from source (clone)
 
-Same as "Run the project" above: needs **Node.js** so the script can run `npm install` / `npm run build`. Prefer **Releases** if you only want to run the app.
+The clone path also works without Node, because `frontend/dist/` is committed and kept current by `.github/workflows/build-frontend.yml`. Install Node.js 18+ only if you plan to edit the frontend — `Run-iiosMap.ps1` will then run `npm install` / `npm run build` to refresh the bundle.
